@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 function App() {
   
-  const [searchTerm, setSearchTerm] = useState('whiplash');
+  const [searchTerm, setSearchTerm] = useState('program');
   const [meanings, setMeanings] = useState([]);
 
   useEffect(()=>{
     //calling API here
     const searchCall = async () =>{
-      const {data} = await axios.get('https://en.wikipedia.org/w/api.php', {
+      const response = await axios.get('https://en.wikipedia.org/w/api.php', {
         params: {
           action: 'query',
           list: 'search',
@@ -17,10 +17,18 @@ function App() {
           srsearch: searchTerm,
         },
       });
-      setMeanings(data.query.search);
+      setMeanings(response.data.query.search);
     }
-    searchCall();
 
+    const timeoutID = setTimeout(()=>{
+      if(searchTerm){
+        searchCall();
+      }  
+
+    },2000);
+  
+  return () => {clearTimeout(timeoutID);};  
+   
   },[searchTerm]);
 
   const renderedResults = meanings.map((meaning)=>{
