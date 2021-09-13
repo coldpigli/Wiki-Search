@@ -22,6 +22,22 @@ function App() {
     searchCall();
 
   },[searchTerm]);
+
+  const renderedResults = meanings.map((meaning)=>{
+    return (
+      <div key={meaning.pageid} className = "item">
+        <div className = "right floated content">
+          <a className = "ui button" 
+            href = {`https://en.wikipedia.org?curid=${meaning.pageid}`}
+          >Source</a>
+        </div>
+        <div className = "content">
+          <div className = "header">{meaning.title}</div>
+            <span dangerouslySetInnerHTML={{ __html: meaning.snippet}}></span>
+        </div>
+      </div>
+    )
+  })
   
   return (
     <div className = "ui container">
@@ -34,6 +50,10 @@ function App() {
             value = {searchTerm}
             onChange = {(e)=>{setSearchTerm(e.target.value)}}
           />
+        </div>
+
+        <div className = "ui celled list">
+          {renderedResults}
         </div>
 
       </div>
