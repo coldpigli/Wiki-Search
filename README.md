@@ -1,0 +1,2 @@
+# Wiki-Search
+Wiki-Search is a simple web app made with React that uses the wikipedia API to return the user a description of a search term typed in by the user. The project uses Axios for network calls.
